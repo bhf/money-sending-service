@@ -1,4 +1,4 @@
-package com.neverless.sendingservice.service;
+package com.neverless.sendingservice.withdraw;
 import java.util.UUID;
 
 import com.neverless.sendingservice.AssetQty;

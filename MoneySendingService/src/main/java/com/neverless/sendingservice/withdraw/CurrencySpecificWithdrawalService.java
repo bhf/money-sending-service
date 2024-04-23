@@ -1,4 +1,4 @@
-package com.neverless.sendingservice.service;
+package com.neverless.sendingservice.withdraw;
 
 /**
  * Withdrawal service for a specific currency
