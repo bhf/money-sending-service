@@ -5,6 +5,6 @@ import java.util.Map;
 
 public class UserAccountBalances {
 
-	private final Map<String, AssetBalance> balances=new HashMap<String, AssetBalance>();
+	private final Map<Long, AssetBalance> balances=new HashMap<Long, AssetBalance>();
 	
 }
