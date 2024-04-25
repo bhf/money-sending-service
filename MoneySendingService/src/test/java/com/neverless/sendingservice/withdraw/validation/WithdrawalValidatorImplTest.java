@@ -54,6 +54,7 @@ class WithdrawalValidatorImplTest {
 		WithdrawalValidationResults valid=validator.validateWithdraw(req);
 		
 		assertNotNull(valid);
+		assertTrue(valid.isValid());
 		
 	}
 
