@@ -1,6 +1,7 @@
 package com.neverless.sendingservice.transfer.validation;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
@@ -10,22 +11,50 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.neverless.sendingservice.entities.Address;
 import com.neverless.sendingservice.entities.AssetBalance;
 import com.neverless.sendingservice.entities.AssetQty;
 import com.neverless.sendingservice.entities.UserAccountBalances;
 import com.neverless.sendingservice.entities.UserEntity;
 import com.neverless.sendingservice.entities.UserService;
 import com.neverless.sendingservice.entities.transactions.TransferRequest;
+import com.neverless.sendingservice.entities.transactions.WithdrawRequest;
 import com.neverless.sendingservice.transactiontracker.TransactionTracker;
 import com.neverless.sendingservice.transactiontracker.TransactionTrackerImpl;
 import com.neverless.sendingservice.transfer.TransferService;
 import com.neverless.sendingservice.withdraw.WithdrawalService;
+import com.neverless.sendingservice.withdraw.validation.WithdrawalValidationResults;
+import com.neverless.sendingservice.withdraw.validation.WithdrawalValidator;
+import com.neverless.sendingservice.withdraw.validation.WithdrawalValidatorImpl;
 
 class TransferValidatorImplTest {
 
 	@Test
 	void testTransferIsValid() {
-		// fail("Not yet implemented");
+		TransactionTracker transTracker = Mockito.mock(TransactionTracker.class);
+
+		Map<Long, UserEntity> users = getUsers();
+		UserAccountBalances balance=new UserAccountBalances();
+		UserEntity user=new UserEntity(0, balance);
+		users.put(0l, user);
+		UserService userService = new UserService(users);
+		TransferValidator validator = new TransferValidatorImpl(userService, transTracker);
+		
+		
+		AssetQty assetQty=new AssetQty();
+		long assetId=1;
+		assetQty.assetId=assetId;
+		assetQty.qty=100;
+		long userId=0;
+		long destUser=userId+1;
+		AssetBalance assetBal=new AssetBalance();
+		assetBal.balance=assetQty.qty*5;
+		balance.setAssetBalance(assetId, assetBal);
+		
+		TransferRequest req=new TransferRequest(UUID.randomUUID(), assetQty, assetId, userId, destUser);
+		TransferValidationResults valid=validator.transferIsValid(req);
+		
+		assertNotNull(valid);
 	}
 
 	private Map<Long, UserEntity> getUsers() {
