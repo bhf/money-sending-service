@@ -86,5 +86,49 @@ class TransactionTrackerImplTest {
 		assertNotNull(pendingTransfers);
 		assertEquals(1, pendingTransfers.pendingTransfers.size());
 	}
+	
+	@Test
+	void testAddMultiplePendingTransfer() {
+		WithdrawalService withdrawService=Mockito.mock(WithdrawalService.class);
+		TransferService transferService=Mockito.mock(TransferService.class);
+		
+		TransactionTracker t=new TransactionTrackerImpl(withdrawService, transferService);
+
+		long assetId=1;
+		AssetQty qty=new AssetQty();
+		qty.assetId=assetId;
+		qty.qty=100;
+		long userId=1;
+		
+		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId), userId);
+		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId), userId);
+		
+		PendingTransferTransactionSummary pendingTransfers = t.getPendingTransfers(userId);
+		
+		assertNotNull(pendingTransfers);
+		assertEquals(2, pendingTransfers.pendingTransfers.size());
+	}
+	
+	@Test
+	void testAddMultiplePendingWithdraw() {
+		WithdrawalService withdrawService=Mockito.mock(WithdrawalService.class);
+		TransferService transferService=Mockito.mock(TransferService.class);
+		
+		TransactionTracker t=new TransactionTrackerImpl(withdrawService, transferService);
+		
+		long assetId=1;
+		AssetQty qty=new AssetQty();
+		qty.assetId=assetId;
+		qty.qty=100;
+		long userId=1;
+		
+		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId), userId);
+		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId), userId);
+		
+		PendingWithdrawTransactionSummary pendingWithdraws = t.getPendingWithdraws(userId);
+		
+		assertNotNull(pendingWithdraws);
+		assertEquals(2, pendingWithdraws.pendingWithdraws.size());
+	}
 
 }
