@@ -2,6 +2,7 @@ package com.neverless.sendingservice.transactiontracker;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.UUID;
 
@@ -22,9 +23,12 @@ class TransactionTrackerImplTest {
 
 	@Test
 	void testGetPendingTransfers() {
+		WithdrawalService withdrawService=Mockito.mock(WithdrawalService.class);
+		TransferService transferService=Mockito.mock(TransferService.class);
+		TransactionTracker t=new TransactionTrackerImpl(withdrawService, transferService);
+		PendingTransferTransactionSummary pending = t.getPendingTransfers(0);
 		
-		
-		
+		assertNull(pending);
 	}
 
 	@Test
