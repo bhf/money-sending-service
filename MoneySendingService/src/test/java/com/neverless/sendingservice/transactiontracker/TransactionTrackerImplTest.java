@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.neverless.sendingservice.entities.Address;
 import com.neverless.sendingservice.entities.AssetQty;
 import com.neverless.sendingservice.entities.transactions.TransferRequest;
 import com.neverless.sendingservice.entities.transactions.WithdrawRequest;
@@ -55,7 +56,8 @@ class TransactionTrackerImplTest {
 		qty.qty=100;
 		long userId=1;
 		
-		WithdrawRequest withdrawReq=new WithdrawRequest(requestId, qty, assetId);
+		Address dest=new Address(UUID.randomUUID());
+		WithdrawRequest withdrawReq=new WithdrawRequest(requestId, qty, assetId,userId,dest);
 		t.addPendingWithdraw(withdrawReq, userId);
 		
 		PendingWithdrawTransactionSummary pendingWithdraws = t.getPendingWithdraws(userId);
@@ -78,7 +80,7 @@ class TransactionTrackerImplTest {
 		qty.qty=100;
 		long userId=1;
 		
-		TransferRequest pendingReq=new TransferRequest(requestId, qty, assetId);
+		TransferRequest pendingReq=new TransferRequest(requestId, qty, assetId,userId,userId+1);
 		t.addPendingTransfer(pendingReq, userId);
 		
 		PendingTransferTransactionSummary pendingTransfers = t.getPendingTransfers(userId);
@@ -100,8 +102,8 @@ class TransactionTrackerImplTest {
 		qty.qty=100;
 		long userId=1;
 		
-		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId), userId);
-		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId), userId);
+		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId,userId,userId+1), userId);
+		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId,userId,userId+1), userId);
 		
 		PendingTransferTransactionSummary pendingTransfers = t.getPendingTransfers(userId);
 		
@@ -122,8 +124,9 @@ class TransactionTrackerImplTest {
 		qty.qty=100;
 		long userId=1;
 		
-		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId), userId);
-		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId), userId);
+		Address dest=new Address(UUID.randomUUID());
+		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId, userId, dest), userId);
+		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId, userId, dest), userId);
 		
 		PendingWithdrawTransactionSummary pendingWithdraws = t.getPendingWithdraws(userId);
 		

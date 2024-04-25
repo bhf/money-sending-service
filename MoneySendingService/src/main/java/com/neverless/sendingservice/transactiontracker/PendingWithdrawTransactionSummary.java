@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.neverless.sendingservice.entities.transactions.TransferRequest;
 import com.neverless.sendingservice.entities.transactions.WithdrawRequest;
 import com.neverless.sendingservice.withdraw.WithdrawalService;
 import com.neverless.sendingservice.withdraw.WithdrawalService.WithdrawalId;
@@ -28,6 +29,19 @@ public class PendingWithdrawTransactionSummary {
 				it.remove();
 			}
 		}
+	}
+
+	public long getPendingQty(long assetId) {
+		long sum=0;
+		
+		for(WithdrawRequest r : pendingWithdraws) {
+			
+			if(r.assetId==assetId) {
+				sum+=r.qty.qty;
+			}
+			
+		}
+		return sum;
 	}
 
 }

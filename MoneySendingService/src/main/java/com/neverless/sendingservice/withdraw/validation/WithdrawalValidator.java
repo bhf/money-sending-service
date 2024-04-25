@@ -25,9 +25,4 @@ public interface WithdrawalValidator {
 	 */
 	public boolean sourceBalanceIsSufficient(WithdrawRequest req);
 	
-	/**
-	 * Check the source and destination address are not the same
-	 * @return
-	 */
-	public boolean unequalSourceDestination(WithdrawRequest req);
 }
