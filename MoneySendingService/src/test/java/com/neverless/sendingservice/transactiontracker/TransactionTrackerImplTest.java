@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class TransactionTrackerImplTest {
 
+
 	@Test
 	void testGetPendingTransfers() {
 		fail("Not yet implemented");
@@ -13,6 +14,16 @@ class TransactionTrackerImplTest {
 
 	@Test
 	void testGetPendingWithdraws() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAddPendingWithdraw() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAddPendingTransfer() {
 		fail("Not yet implemented");
 	}
 

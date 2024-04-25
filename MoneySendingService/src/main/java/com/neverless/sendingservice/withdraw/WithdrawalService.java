@@ -1,7 +1,7 @@
 package com.neverless.sendingservice.withdraw;
 import java.util.UUID;
 
-import com.neverless.sendingservice.AssetQty;
+import com.neverless.sendingservice.entities.AssetQty;
 
 public interface WithdrawalService {
     /**

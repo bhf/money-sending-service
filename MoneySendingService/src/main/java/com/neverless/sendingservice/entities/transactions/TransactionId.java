@@ -1,12 +1,12 @@
-package com.neverless.sendingservice;
+package com.neverless.sendingservice.entities.transactions;
 
 import java.util.UUID;
 
-public class WithdrawalId {
+public class TransactionId {
 
 	final UUID id;
 
-	public WithdrawalId(UUID id) {
+	public TransactionId(UUID id) {
 		super();
 		this.id = id;
 	}

@@ -1,4 +1,4 @@
-package com.neverless.sendingservice.assets;
+package com.neverless.sendingservice.entities.assets;
 
 public class PrecisionDetails {
 
