@@ -33,7 +33,12 @@ class TransactionTrackerImplTest {
 
 	@Test
 	void testGetPendingWithdraws() {
-		//fail("Not yet implemented");
+		WithdrawalService withdrawService=Mockito.mock(WithdrawalService.class);
+		TransferService transferService=Mockito.mock(TransferService.class);
+		TransactionTracker t=new TransactionTrackerImpl(withdrawService, transferService);
+		PendingTransferTransactionSummary pending = t.getPendingTransfers(0);
+		
+		assertNull(pending);
 	}
 
 	@Test
