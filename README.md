@@ -16,5 +16,6 @@ openapi.yml - the OpenAPI spec
 3. Run the REST interface via com.neverless.sendingservice.REST.RestApplication as a Springboot application
 
 ### Testing
-Excluding API stubs (WithdrawalServiceStub and TransferServiceStub) the unit testing coverage is > 97%
+Excluding API stubs (WithdrawalServiceStub and TransferServiceStub) the unit testing coverage is > 97%\
+
 No e2e tests included in the timeframe
