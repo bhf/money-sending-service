@@ -14,5 +14,10 @@ public class UserAccountBalances {
 	public AssetBalance getAssetBalance(long assetId) {
 		return balances.get(assetId);
 	}
+
+	public void setAssetBalance(long assetId, AssetBalance assetBalance) {
+		balances.put(assetId, assetBalance);
+		
+	}
 	
 }
