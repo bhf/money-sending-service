@@ -55,7 +55,7 @@ class TransactionTrackerImplTest {
 		qty.qty=100;
 		long userId=1;
 		
-		WithdrawRequest withdrawReq=new WithdrawRequest(requestId, qty, assetId);
+		WithdrawRequest withdrawReq=new WithdrawRequest(requestId, qty, assetId,userId);
 		t.addPendingWithdraw(withdrawReq, userId);
 		
 		PendingWithdrawTransactionSummary pendingWithdraws = t.getPendingWithdraws(userId);
@@ -122,8 +122,8 @@ class TransactionTrackerImplTest {
 		qty.qty=100;
 		long userId=1;
 		
-		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId), userId);
-		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId), userId);
+		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId, userId), userId);
+		t.addPendingWithdraw(new WithdrawRequest(UUID.randomUUID(), qty, assetId, userId), userId);
 		
 		PendingWithdrawTransactionSummary pendingWithdraws = t.getPendingWithdraws(userId);
 		
