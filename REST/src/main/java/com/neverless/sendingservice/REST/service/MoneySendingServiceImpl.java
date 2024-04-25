@@ -11,6 +11,7 @@ import com.neverless.sendingservice.REST.dto.response.TransferReqResponseDTO;
 import com.neverless.sendingservice.REST.dto.response.TransferStatusResponseDTO;
 import com.neverless.sendingservice.REST.dto.response.WithdrawReqResponseDTO;
 import com.neverless.sendingservice.REST.dto.response.WithdrawStatusResponseDTO;
+import com.neverless.sendingservice.transfer.TransferService.TransferState;
 import com.neverless.sendingservice.withdraw.WithdrawalService.WithdrawalState;
 
 import jakarta.validation.Valid;
@@ -40,7 +41,10 @@ public class MoneySendingServiceImpl implements MoneySendingService{
 
 	@Override
 	public TransferStatusResponseDTO getTransferStatus(@Valid TransferStatusRequestDTO req) {
-		return null;
+		TransferState status = delegator.getTransferStatus(req.requestId);
+		TransferStatusResponseDTO resp=new TransferStatusResponseDTO();
+		resp.status=status.toString();
+		return resp;
 	}
 
 }
