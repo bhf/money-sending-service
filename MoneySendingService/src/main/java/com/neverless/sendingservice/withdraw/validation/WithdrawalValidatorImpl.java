@@ -68,8 +68,8 @@ public class WithdrawalValidatorImpl implements WithdrawalValidator {
 		PendingWithdrawTransactionSummary pendingWithdraws = transTracker.getPendingWithdraws(userId);
 		
 		long assetId=req.assetId;
-		long pendingTransferQty=pendingTransfers.getPendingQty(assetId);
-		long pendingWithdrawQty=pendingWithdraws.getPendingQty(assetId);
+		long pendingTransferQty= null!=pendingTransfers? pendingTransfers.getPendingQty(assetId) :0 ;
+		long pendingWithdrawQty=null!=pendingWithdraws? pendingWithdraws.getPendingQty(assetId) :0;
 		long totalPendingQty = pendingTransferQty+pendingWithdrawQty;
 		
 		long existingAssetBalance=userService.getUserAssetBalance(userId, assetId);
