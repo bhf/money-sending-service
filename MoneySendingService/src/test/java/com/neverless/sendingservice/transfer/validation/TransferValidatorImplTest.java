@@ -73,7 +73,57 @@ class TransferValidatorImplTest {
 
 	@Test
 	void testDestinationAccountIsValid() {
-		//fail("Not yet implemented");
+		
+		TransactionTracker transTracker=Mockito.mock(TransactionTracker.class);
+		
+		Map<Long, UserEntity> users=getUsers();
+		UserService userService=new UserService(users);
+		TransferValidator validator=new TransferValidatorImpl(userService, transTracker);
+		
+		AssetQty assetQty=new AssetQty();
+		long assetId=1;
+		assetQty.assetId=assetId;
+		assetQty.qty=100;
+		long userId=0;
+		long destUser=userId+1;
+
+		// source user exists and has a balance
+		
+		UserAccountBalances balances = new UserAccountBalances();
+		UserEntity userEntity = new UserEntity(userId, balances);
+		users.put(userId, userEntity);
+
+		AssetBalance assetBalance = new AssetBalance();
+		balances.setAssetBalance(assetId, assetBalance);
+
+		TransferRequest req=new TransferRequest(UUID.randomUUID(), assetQty, assetId, userId, destUser);
+		
+		// invalid destination user
+		
+		boolean noDestUser=validator.destinationAccountIsValid(req);
+		
+		assertFalse(noDestUser);
+		
+		// destination user exists but has no asset balance
+		
+		UserAccountBalances destBalances = new UserAccountBalances();
+		UserEntity destUserEntity = new UserEntity(destUser, destBalances);
+		users.put(destUser, destUserEntity);
+		
+		boolean destinationUserNoBalance=validator.destinationAccountIsValid(req);
+		
+		assertFalse(destinationUserNoBalance);
+		
+		
+		// destination user exists and has a valid existing asset balance
+
+		AssetBalance destAssetBalance = new AssetBalance();
+		destBalances.setAssetBalance(assetId, destAssetBalance);
+		
+		boolean destinationUserValid=validator.destinationAccountIsValid(req);
+		
+		assertTrue(destinationUserValid);
+		
 	}
 
 	@Test
