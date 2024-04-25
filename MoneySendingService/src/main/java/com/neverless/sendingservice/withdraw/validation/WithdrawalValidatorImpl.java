@@ -4,14 +4,19 @@ import java.util.UUID;
 
 import com.neverless.sendingservice.entities.UserService;
 import com.neverless.sendingservice.entities.transactions.WithdrawRequest;
+import com.neverless.sendingservice.transactiontracker.PendingTransferTransactionSummary;
+import com.neverless.sendingservice.transactiontracker.PendingWithdrawTransactionSummary;
+import com.neverless.sendingservice.transactiontracker.TransactionTracker;
 
 public class WithdrawalValidatorImpl implements WithdrawalValidator {
 
 	final UserService userService;
+	final TransactionTracker transTracker;
 
-	public WithdrawalValidatorImpl(UserService userService) {
+	public WithdrawalValidatorImpl(UserService userService, TransactionTracker transactionTracker) {
 		super();
 		this.userService = userService;
+		this.transTracker=transactionTracker;
 	}
 
 	@Override
@@ -47,13 +52,29 @@ public class WithdrawalValidatorImpl implements WithdrawalValidator {
 	 * @return
 	 */
 	private boolean isValidDestination(UUID address, long assetId) {
+		//TODO: Implement this as an AssetAddressValidator
 		return true;
 	}
 
+	/**
+	 * Given any pending withdraws and transfers, is this withdraw request
+	 * valid
+	 */
 	@Override
 	public boolean sourceBalanceIsSufficient(WithdrawRequest req) {
-
-		return false;
+		
+		long userId=req.userId;
+		PendingTransferTransactionSummary pendingTransfers = transTracker.getPendingTransfers(userId);
+		PendingWithdrawTransactionSummary pendingWithdraws = transTracker.getPendingWithdraws(userId);
+		
+		long assetId=req.assetId;
+		long pendingTransferQty=pendingTransfers.getPendingQty(assetId);
+		long pendingWithdrawQty=pendingWithdraws.getPendingQty(assetId);
+		long totalPendingQty = pendingTransferQty+pendingWithdrawQty;
+		
+		long existingAssetBalance=userService.getUserAssetBalance(userId, assetId);
+		
+		return existingAssetBalance >= totalPendingQty;
 	}
 
 }
