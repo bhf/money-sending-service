@@ -17,3 +17,4 @@ openapi.yml - the OpenAPI spec
 
 ### Testing
 Excluding API stubs (WithdrawalServiceStub and TransferServiceStub) the unit testing coverage is > 97%
+No e2e tests included in the timeframe
