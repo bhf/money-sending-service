@@ -17,7 +17,6 @@ public class WithdrawalValidatorImpl implements WithdrawalValidator {
 		WithdrawalValidationResults res = new WithdrawalValidationResults();
 		res.srcAccountValid = sourceAccountExists(req);
 		res.destIsValid = destinationAddressIsValid(req);
-		res.unequalSrcDest = unequalSourceDestination(req);
 		res.sufficientBalance = sourceBalanceIsSufficient(req);
 		return res;
 	}
@@ -42,11 +41,6 @@ public class WithdrawalValidatorImpl implements WithdrawalValidator {
 	@Override
 	public boolean sourceBalanceIsSufficient(WithdrawRequest req) {
 
-		return false;
-	}
-
-	@Override
-	public boolean unequalSourceDestination(WithdrawRequest req) {
 		return false;
 	}
 
