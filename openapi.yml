@@ -1,0 +1,195 @@
+openapi: 3.0.1
+info:
+  title: Money sending API
+  description: This API exposes endpoints to withdraw monies and transfer between accounts.
+  termsOfService: https://www.neverless.com/terms
+  contact:
+    name: Sanjeev
+    url: https://www.neverless.com
+    email: sanjeev.sarda@gmail.com
+  license:
+    name: MIT License
+    url: https://choosealicense.com/licenses/mit/
+  version: '1.0'
+servers:
+  - url: http://localhost:8080
+    description: Dev server
+tags:
+  - name: Request Controller
+    description: Money sending service operations
+paths:
+  /api/v1/withdraw:
+    get:
+      tags:
+        - Request Controller
+      operationId: getWithdrawStatus
+      parameters:
+        - name: req
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/WithdrawStatusRequestDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WithdrawStatusResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+    post:
+      tags:
+        - Request Controller
+      operationId: createPendingWithdraw
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WithdrawRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WithdrawReqResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /api/v1/transfer:
+    get:
+      tags:
+        - Request Controller
+      operationId: getTransferStatus
+      parameters:
+        - name: req
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/TransferStatusRequestDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TransferStatusResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+    post:
+      tags:
+        - Request Controller
+      operationId: createPendingTransfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TransferReqResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+components:
+  schemas:
+    WithdrawRequestDTO:
+      type: object
+      properties:
+        requestId:
+          type: string
+        assetId:
+          type: integer
+          format: int64
+        requestQty:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        destinationAddress:
+          type: string
+    WithdrawReqResponseDTO:
+      type: object
+      properties:
+        srcAccountValid:
+          type: boolean
+        destIsValid:
+          type: boolean
+        sufficientBalance:
+          type: boolean
+    TransferRequestDTO:
+      type: object
+      properties:
+        requestId:
+          type: string
+        assetID:
+          type: integer
+          format: int64
+        requestQty:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        destinationUser:
+          type: integer
+          format: int64
+    TransferReqResponseDTO:
+      type: object
+      properties:
+        sourceAccountValid:
+          type: boolean
+        destinationAccountValid:
+          type: boolean
+        qtyIsValid:
+          type: boolean
+    WithdrawStatusRequestDTO:
+      type: object
+      properties:
+        requestId:
+          type: string
+    WithdrawStatusResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
+    TransferStatusRequestDTO:
+      type: object
+      properties:
+        requestId:
+          type: string
+    TransferStatusResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
