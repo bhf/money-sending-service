@@ -35,7 +35,16 @@ public class TransferValidatorImpl implements TransferValidator{
 
 	@Override
 	public boolean destinationAccountIsValid(TransferRequest req) {
-		return false;
+		
+		long userID = req.destUser;
+		long assetId = req.assetId;
+
+		// check the user-asset combo exist
+		//TODO: How to handle the case where the destination account
+		// doesn't have an asset balance for the specific asset
+
+		boolean isValid = userService.isValid(userID, assetId);
+		return isValid;
 		
 	}
 	
