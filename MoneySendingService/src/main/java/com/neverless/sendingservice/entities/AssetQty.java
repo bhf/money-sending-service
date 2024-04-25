@@ -1,4 +1,4 @@
-package com.neverless.sendingservice;
+package com.neverless.sendingservice.entities;
 
 public class AssetQty {
 	

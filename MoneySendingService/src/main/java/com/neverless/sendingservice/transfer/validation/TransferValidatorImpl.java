@@ -1,6 +1,6 @@
 package com.neverless.sendingservice.transfer.validation;
 
-import com.neverless.sendingservice.entities.TransferRequest;
+import com.neverless.sendingservice.entities.transactions.TransferRequest;
 
 public class TransferValidatorImpl implements TransferValidator{
 

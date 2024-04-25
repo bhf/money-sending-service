@@ -1,6 +1,6 @@
 package com.neverless.sendingservice.withdraw.validation;
 
-import com.neverless.sendingservice.entities.WithdrawRequest;
+import com.neverless.sendingservice.entities.transactions.WithdrawRequest;
 
 public interface WithdrawalValidator {
 

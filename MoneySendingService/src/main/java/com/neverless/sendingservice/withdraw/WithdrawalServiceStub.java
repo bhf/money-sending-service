@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.neverless.sendingservice.AssetQty;
+import com.neverless.sendingservice.entities.AssetQty;
 
 public class WithdrawalServiceStub implements WithdrawalService {
     private final ConcurrentMap<WithdrawalId, Withdrawal> requests = new ConcurrentHashMap<>();
