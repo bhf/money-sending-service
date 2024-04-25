@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.neverless.sendingservice.entities.AssetQty;
 import com.neverless.sendingservice.entities.transactions.TransferRequest;
+import com.neverless.sendingservice.entities.transactions.WithdrawRequest;
 import com.neverless.sendingservice.transfer.TransferService;
 import com.neverless.sendingservice.withdraw.WithdrawalService;
 
@@ -33,7 +34,25 @@ class TransactionTrackerImplTest {
 
 	@Test
 	void testAddPendingWithdraw() {
-	
+		WithdrawalService withdrawService=Mockito.mock(WithdrawalService.class);
+		TransferService transferService=Mockito.mock(TransferService.class);
+		
+		TransactionTracker t=new TransactionTrackerImpl(withdrawService, transferService);
+		
+		UUID requestId=UUID.randomUUID();
+		long assetId=1;
+		AssetQty qty=new AssetQty();
+		qty.assetId=assetId;
+		qty.qty=100;
+		long userId=1;
+		
+		WithdrawRequest withdrawReq=new WithdrawRequest(requestId, qty, assetId);
+		t.addPendingWithdraw(withdrawReq, userId);
+		
+		PendingWithdrawTransactionSummary pendingWithdraws = t.getPendingWithdraws(userId);
+		
+		assertNotNull(pendingWithdraws);
+		assertEquals(1, pendingWithdraws.pendingWithdraws.size());
 	}
 
 	@Test
