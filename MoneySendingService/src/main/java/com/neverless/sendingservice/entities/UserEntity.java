@@ -11,6 +11,13 @@ public class UserEntity {
 		this.balances = balances;
 	} 
 	
-	
+	public boolean hasAssetBalance(long asset) {
+		return balances.hasAsset(asset);
+	}
+
+	public AssetBalance getAssetBalance(long assetId) {
+		return balances.getAssetBalance(assetId);
+		
+	}
 	
 }
