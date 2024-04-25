@@ -74,7 +74,7 @@ public class WithdrawalValidatorImpl implements WithdrawalValidator {
 		
 		long existingAssetBalance=userService.getUserAssetBalance(userId, assetId);
 		
-		return existingAssetBalance >= totalPendingQty;
+		return existingAssetBalance>0 && existingAssetBalance >= totalPendingQty+req.qty.qty;
 	}
 
 }

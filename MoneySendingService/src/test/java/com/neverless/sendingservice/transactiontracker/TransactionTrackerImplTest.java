@@ -80,7 +80,7 @@ class TransactionTrackerImplTest {
 		qty.qty=100;
 		long userId=1;
 		
-		TransferRequest pendingReq=new TransferRequest(requestId, qty, assetId);
+		TransferRequest pendingReq=new TransferRequest(requestId, qty, assetId,userId,userId+1);
 		t.addPendingTransfer(pendingReq, userId);
 		
 		PendingTransferTransactionSummary pendingTransfers = t.getPendingTransfers(userId);
@@ -102,8 +102,8 @@ class TransactionTrackerImplTest {
 		qty.qty=100;
 		long userId=1;
 		
-		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId), userId);
-		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId), userId);
+		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId,userId,userId+1), userId);
+		t.addPendingTransfer(new TransferRequest(UUID.randomUUID(), qty, assetId,userId,userId+1), userId);
 		
 		PendingTransferTransactionSummary pendingTransfers = t.getPendingTransfers(userId);
 		
