@@ -70,7 +70,30 @@ class WithdrawalValidatorImplTest {
 
 	@Test
 	void testDestinationAddressIsValid() {
-		//fail("Not yet implemented");
+		TransactionTracker transTracker=Mockito.mock(TransactionTracker.class);
+		
+		Map<Long, UserEntity> users=getUsers();
+		UserService userService=new UserService(users);
+		WithdrawalValidator validator=new WithdrawalValidatorImpl(userService, transTracker);
+		
+		AssetQty assetQty=new AssetQty();
+		long assetId=1;
+		assetQty.assetId=assetId;
+		assetQty.qty=100;
+		long userId=0;
+		Address destAddress=null;
+		WithdrawRequest req=new WithdrawRequest(UUID.randomUUID(), assetQty, assetId, userId, destAddress);
+		
+		boolean nullAddress= validator.destinationAddressIsValid(req);
+		
+		assertFalse(nullAddress);
+		
+		destAddress=new Address(UUID.randomUUID());
+		req=new WithdrawRequest(UUID.randomUUID(), assetQty, assetId, userId, destAddress);
+		
+		boolean randomAddress= validator.destinationAddressIsValid(req);
+		
+		assertTrue(randomAddress);
 	}
 
 	@Test
