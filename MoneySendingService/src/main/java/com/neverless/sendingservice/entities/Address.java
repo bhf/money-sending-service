@@ -5,7 +5,7 @@
   
   public class Address {
   
-  final UUID address;
+  public final UUID address;
   
   public Address(UUID address) { this.address = address; }
   

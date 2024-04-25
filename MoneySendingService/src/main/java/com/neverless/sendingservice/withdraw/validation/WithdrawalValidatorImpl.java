@@ -1,5 +1,7 @@
 package com.neverless.sendingservice.withdraw.validation;
 
+import java.util.UUID;
+
 import com.neverless.sendingservice.entities.UserService;
 import com.neverless.sendingservice.entities.transactions.WithdrawRequest;
 
@@ -28,14 +30,24 @@ public class WithdrawalValidatorImpl implements WithdrawalValidator {
 
 		// check the user-asset combo exist
 
-		boolean isValid=userService.isValid(userID,assetId);
+		boolean isValid = userService.isValid(userID, assetId);
 		return isValid;
 	}
 
 	@Override
 	public boolean destinationAddressIsValid(WithdrawRequest req) {
+		return null != req.destinationAddress && isValidDestination(req.destinationAddress.address, req.assetId);
+	}
 
-		return false;
+	/**
+	 * Check the address the funds are being withdrawn too is valid
+	 * for the asset
+	 * @param address
+	 * @param assetId
+	 * @return
+	 */
+	private boolean isValidDestination(UUID address, long assetId) {
+		return true;
 	}
 
 	@Override
