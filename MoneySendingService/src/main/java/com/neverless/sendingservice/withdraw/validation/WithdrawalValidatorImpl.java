@@ -35,8 +35,7 @@ public class WithdrawalValidatorImpl implements WithdrawalValidator {
 
 		// check the user-asset combo exist
 
-		boolean isValid = userService.isValid(userID, assetId);
-		return isValid;
+		return userService.isValid(userID, assetId);
 	}
 
 	@Override

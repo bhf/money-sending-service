@@ -9,8 +9,8 @@ public class TransferRequest {
 	public final UUID id;
 	public final AssetQty qty;
 	public final long assetId;
-	public long userId;
-	public long destUser;
+	public final long userId;
+	public final long destUser;
 	
 	public TransferRequest(UUID id, AssetQty qty, long assetId, long userId, long destinationUser) {
 		super();

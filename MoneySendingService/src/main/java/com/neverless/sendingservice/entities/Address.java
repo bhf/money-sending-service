@@ -13,5 +13,10 @@
   
   @Override public int hashCode() { return address.hashCode(); }
   
+  @Override
+	public boolean equals(Object obj) {
+		return (obj instanceof Address addy) && (addy.address.equals(address));
+	}
+  
   }
  

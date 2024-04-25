@@ -34,8 +34,7 @@ public class TransferValidatorImpl implements TransferValidator{
 
 		// check the user-asset combo exist
 
-		boolean isValid = userService.isValid(userID, assetId);
-		return isValid;
+		return userService.isValid(userID, assetId);
 	}
 
 	@Override
@@ -48,8 +47,7 @@ public class TransferValidatorImpl implements TransferValidator{
 		//TODO: How to handle the case where the destination account
 		// doesn't have an asset balance for the specific asset
 
-		boolean isValid = userService.isValid(userID, assetId);
-		return isValid;
+		return userService.isValid(userID, assetId);
 		
 	}
 

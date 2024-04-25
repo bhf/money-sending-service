@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.neverless.sendingservice.entities.transactions.TransferRequest;
 import com.neverless.sendingservice.entities.transactions.WithdrawRequest;
 import com.neverless.sendingservice.withdraw.WithdrawalService;
 import com.neverless.sendingservice.withdraw.WithdrawalService.WithdrawalId;
