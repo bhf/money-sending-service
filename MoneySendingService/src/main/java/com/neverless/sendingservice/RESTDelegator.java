@@ -10,6 +10,7 @@ import com.neverless.sendingservice.entities.AssetQty;
 import com.neverless.sendingservice.entities.UserAccountBalances;
 import com.neverless.sendingservice.entities.UserEntity;
 import com.neverless.sendingservice.entities.UserService;
+import com.neverless.sendingservice.entities.transactions.TransferRequest;
 import com.neverless.sendingservice.entities.transactions.WithdrawRequest;
 import com.neverless.sendingservice.transactiontracker.TransactionTracker;
 import com.neverless.sendingservice.transactiontracker.TransactionTrackerImpl;
@@ -17,6 +18,9 @@ import com.neverless.sendingservice.transfer.TransferService;
 import com.neverless.sendingservice.transfer.TransferService.TransferId;
 import com.neverless.sendingservice.transfer.TransferService.TransferState;
 import com.neverless.sendingservice.transfer.TransferServiceStub;
+import com.neverless.sendingservice.transfer.validation.TransferValidationResults;
+import com.neverless.sendingservice.transfer.validation.TransferValidator;
+import com.neverless.sendingservice.transfer.validation.TransferValidatorImpl;
 import com.neverless.sendingservice.withdraw.WithdrawalService;
 import com.neverless.sendingservice.withdraw.WithdrawalService.WithdrawalId;
 import com.neverless.sendingservice.withdraw.WithdrawalService.WithdrawalState;
@@ -33,6 +37,7 @@ public class RESTDelegator {
 	private final UserService userService=new UserService(users);
 	private final TransactionTracker transactionTracker=new TransactionTrackerImpl(withdrawService, transferService);
 	private final WithdrawalValidator withdrawValidator=new WithdrawalValidatorImpl(userService, transactionTracker);
+	private final TransferValidator transferValidator=new TransferValidatorImpl(userService, transactionTracker);
 	
 	
 	public RESTDelegator() {
@@ -80,6 +85,27 @@ public class RESTDelegator {
 		}
 		
 		return validateWithdraw;
+		
+	}
+	
+	public TransferValidationResults handleTransferRequest(String requestId, long assetId, long requestQty, long userId, long destinationUser) {
+		UUID id=UUID.fromString(requestId);
+		AssetQty qty=new AssetQty();
+		qty.assetId=assetId;
+		qty.qty=requestQty;
+		TransferRequest req=new TransferRequest(id, qty, assetId, userId, destinationUser);
+		
+		TransferValidationResults res=transferValidator.transferIsValid(req);
+		
+		if(res.isValid()) {
+			TransferId transId=new TransferId(id);
+			com.neverless.sendingservice.transfer.TransferService.Address transAddress
+			=new com.neverless.sendingservice.transfer.TransferService.Address(String.valueOf(destinationUser));
+			transferService.requestTransfer(transId, transAddress, qty);
+		}
+		
+		return res;
+		
 		
 	}
 	

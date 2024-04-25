@@ -66,7 +66,7 @@ public class MoneySendingServiceController
         catch (Exception e)
         {
             logger.error("Error whilst handling " + req, e);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't create pending transfer "+req, e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't create pending withdraw "+req, e);
         }
     }
 
@@ -81,12 +81,12 @@ public class MoneySendingServiceController
          catch (Exception e)
          {
              logger.error("Error whilst handling " + req, e);
-             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't create pending transfer "+req, e);
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find pending withdraw "+req, e);
          }
     }
     
     @GetMapping("/transfer")
-    public ResponseEntity<TransferStatusResponseDTO> mapGet(@Valid TransferStatusRequestDTO req)
+    public ResponseEntity<TransferStatusResponseDTO> getTransferStatus(@Valid TransferStatusRequestDTO req)
     {
     	 try
          {
@@ -96,7 +96,7 @@ public class MoneySendingServiceController
          catch (Exception e)
          {
              logger.error("Error whilst handling " + req, e);
-             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't create pending transfer "+req, e);
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find pending transfer "+req, e);
          }
     }
 
