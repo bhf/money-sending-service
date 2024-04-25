@@ -30,5 +30,18 @@ public class PendingTransferTransactionSummary {
 		}
 	}
 
+	public long getPendingQty(long assetId) {
+		long sum=0;
+		
+		for(TransferRequest r : pendingTransfers) {
+			
+			if(r.assetId==assetId) {
+				sum+=r.qty.qty;
+			}
+			
+		}
+		return sum;
+	}
+
 
 }
