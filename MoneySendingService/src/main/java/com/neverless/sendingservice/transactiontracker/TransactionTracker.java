@@ -7,12 +7,14 @@ public interface TransactionTracker {
 
 	/**
 	 * Get a summary of pending transfers between 2 users
+	 * Null safety not guaranteed
 	 * @return
 	 */
 	public PendingTransferTransactionSummary getPendingTransfers(long userId);
 	
 	/**
 	 * Get a summary of pending withdraws between 2 users
+	 * Null safety not guaranteed
 	 * @return
 	 */
 	public PendingWithdrawTransactionSummary getPendingWithdraws(long userId);
